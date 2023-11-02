@@ -6,7 +6,7 @@ Chromium C++ Codebase debugging tricks &amp; tips for myself
 ## Prerequisits
 1. Git
 
-## Get the `depot_tools`
+## Get the `depot_tools` [Windows](https://chromium.googlesource.com/chromium/src/+/main/docs/windows_build_instructions.md#install) [macOS](https://chromium.googlesource.com/chromium/src/+/main/docs/mac_build_instructions.md#install)
 ```console
 mkdir -p ~/Sources/Chromium/depot_tools
 cd ~/Sources/Chromium/depot_tools
@@ -14,7 +14,7 @@ git clone https://chromium.googlesource.com/chromium/tools/depot_tools.git .
 # export PATH=/path/to/depot_tools:$PATH  OR add depot_tools path to PATH on Windows machine
 ```
 
-## Get the code
+## Get the code [Windows](https://chromium.googlesource.com/chromium/src/+/main/docs/windows_build_instructions.md#get-the-code) [macOS](https://chromium.googlesource.com/chromium/src/+/main/docs/mac_build_instructions.md#get-the-code)
 ```console
 mkdir -p ~/Sources/Chromium/Source
 cd ~/Sources/Chromium/Source
