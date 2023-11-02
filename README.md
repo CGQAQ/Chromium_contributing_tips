@@ -53,5 +53,7 @@ LOG(ERROR) << "YOUR LOG" << YOUR_VARIABLE ;
 #include "base/debug/stack_trace.h"
 // ...
 LOG(ERROR) << "StackTrace: " << base::debug::StackTrace{};
+```
+need `--disable-gpu-sandbox` flag if you are debugging gpu process, `--no-sandbox` flag if you are debugging one of the renderer processes
 
 
