@@ -47,3 +47,11 @@ save and exit editor
 // ...
 LOG(ERROR) << "YOUR LOG" << YOUR_VARIABLE ;
 ```
+
+# And of course [StackTrace](https://chromium.googlesource.com/chromiumos/docs/+/master/stack_traces.md#how-to-use-base_stacktrace)
+```cpp
+#include "base/debug/stack_trace.h"
+// ...
+LOG(ERROR) << "StackTrace: " << base::debug::StackTrace{};
+
+
