@@ -39,7 +39,7 @@ save and exit editor
 3. `./out/release/chrome.exe`
 
 
-# Debug by logging
+# Debug by [logging](https://www.chromium.org/for-testers/enable-logging/)
 1. `./out/release/chrome.exe  --enable-logging=stderr --v=-1`
 2. in code
 ```cpp
