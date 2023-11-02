@@ -25,7 +25,7 @@ git pull
 gclient sync
 ```
 
-# Faster build
+# Faster build [ref](https://chromium.googlesource.com/chromium/src/+/HEAD/docs/windows_build_instructions.md#faster-builds)
 1. gn args out/release
 Then input:
 ```gn
@@ -39,7 +39,7 @@ save and exit editor
 3. `./out/release/chrome.exe`
 
 
-# Debug by [logging](https://www.chromium.org/for-testers/enable-logging/)
+# Debug by logging [ref](https://www.chromium.org/for-testers/enable-logging/)
 1. `./out/release/chrome.exe  --enable-logging=stderr --v=-1`
 2. in code
 ```cpp
@@ -48,12 +48,49 @@ save and exit editor
 LOG(ERROR) << "YOUR LOG" << YOUR_VARIABLE ;
 ```
 
-# And of course [StackTrace](https://chromium.googlesource.com/chromiumos/docs/+/master/stack_traces.md#how-to-use-base_stacktrace)
+# And of course StackTrace [ref](https://chromium.googlesource.com/chromiumos/docs/+/master/stack_traces.md#how-to-use-base_stacktrace)
 ```cpp
 #include "base/debug/stack_trace.h"
 // ...
 LOG(ERROR) << "StackTrace: " << base::debug::StackTrace{};
 ```
 need `--disable-gpu-sandbox` flag if you are debugging gpu process, `--no-sandbox` flag if you are debugging one of the renderer processes
+
+# Faster git operations
+
+## Windows [ref](https://chromium.googlesource.com/chromium/src/+/HEAD/docs/windows_build_instructions.md#improving-performance-of-git-commands)
+```console
+git update-index --test-untracked-cache
+git config core.untrackedCache true
+git config core.fsmonitor true
+```
+
+## MacOS [ref](https://chromium.googlesource.com/chromium/src/+/HEAD/docs/mac_build_instructions.md#improving-performance-of-git-commands)
+```console
+sysctl -a | egrep 'kern\..*vnodes'
+sudo sysctl kern.maxvnodes=$((512*1024))
+
+sudo tee /Library/LaunchDaemons/kern.maxvnodes.plist > /dev/null <<EOF
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+  <dict>
+    <key>Label</key>
+      <string>kern.maxvnodes</string>
+    <key>ProgramArguments</key>
+      <array>
+        <string>sysctl</string>
+        <string>kern.maxvnodes=524288</string>
+      </array>
+    <key>RunAtLoad</key>
+      <true/>
+  </dict>
+</plist>
+EOF
+
+git update-index --test-untracked-cache
+git config core.untrackedCache true
+git config core.fsmonitor true
+```
 
 
