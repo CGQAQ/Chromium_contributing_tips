@@ -2,6 +2,29 @@
 Chromium C++ Codebase debugging tricks &amp; tips for myself
 
 
+# Get the code
+## Prerequisits
+1. Git
+
+## Get the `depot_tools`
+```console
+mkdir -p ~/Sources/Chromium/depot_tools
+cd ~/Sources/Chromium/depot_tools
+git clone https://chromium.googlesource.com/chromium/tools/depot_tools.git .
+# export PATH=/path/to/depot_tools:$PATH  OR add depot_tools path to PATH on Windows machine
+```
+
+## Get the code
+```console
+mkdir -p ~/Sources/Chromium/Source
+cd ~/Sources/Chromium/Source
+fetch chromium
+cd src
+git checkout main
+git pull
+gclient sync
+```
+
 # Faster build
 1. gn args out/release
 Then input:
