@@ -1,5 +1,5 @@
 # Chromium_contributing_tips
-Chromium C++ Codebase debugging tricks &amp; tips for myself
+Chromium C++ Codebase contributing tricks &amp; tips for myself
 
 
 # Get the code
