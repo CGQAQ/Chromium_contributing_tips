@@ -38,6 +38,10 @@ save and exit editor
 2. `autoninja -C out/release`
 3. `./out/release/chrome.exe`
 
+# Generate `compile_commands.json` [ref](https://chromium.googlesource.com/chromium/src/+/master/docs/clangd.md#setting-up)
+```console
+python tools/clang/scripts/generate_compdb.py -p out/Default > compile_commands.json
+```
 
 # Debug by logging [ref](https://www.chromium.org/for-testers/enable-logging/)
 1. `./out/release/chrome.exe  --enable-logging=stderr --v=-1`
