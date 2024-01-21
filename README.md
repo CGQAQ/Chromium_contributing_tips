@@ -44,6 +44,7 @@ save and exit editor
 tools/clang/scripts/generate_compdb.py -p out/Default > compile_commands.json
 
 # powershell
+# NOTE: if failed, please check python version, need python3
 python tools/clang/scripts/generate_compdb.py -p out/Default | out-file -encoding utf8 compile_commands.json
 ```
 
