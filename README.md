@@ -40,7 +40,11 @@ save and exit editor
 
 # Generate `compile_commands.json` [ref](https://chromium.googlesource.com/chromium/src/+/master/docs/clangd.md#setting-up)
 ```console
-python tools/clang/scripts/generate_compdb.py -p out/Default > compile_commands.json
+# unix like
+tools/clang/scripts/generate_compdb.py -p out/Default > compile_commands.json
+
+# powershell
+python tools/clang/scripts/generate_compdb.py -p out/Default | out-file -encoding utf8 compile_commands.json
 ```
 
 # Debug by logging [ref](https://www.chromium.org/for-testers/enable-logging/)
