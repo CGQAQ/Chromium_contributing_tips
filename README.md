@@ -67,7 +67,8 @@ tools/clang/scripts/generate_compdb.py -p out/Default > compile_commands.json
 python tools/clang/scripts/generate_compdb.py -p out/Default | out-file -encoding utf8 compile_commands.json
 ```
 
-# Debug by logging [ref](https://www.chromium.org/for-testers/enable-logging/)
+# Debug
+### Logging [ref](https://www.chromium.org/for-testers/enable-logging/)
 1. `./out/release/chrome.exe  --enable-logging=stderr --v=-1`
 2. in code
 ```cpp
@@ -76,16 +77,13 @@ python tools/clang/scripts/generate_compdb.py -p out/Default | out-file -encodin
 LOG(ERROR) << "YOUR LOG" << YOUR_VARIABLE ;
 ```
 
-# And of course StackTrace [ref](https://chromium.googlesource.com/chromiumos/docs/+/master/stack_traces.md#how-to-use-base_stacktrace)
+### StackTrace [ref](https://chromium.googlesource.com/chromiumos/docs/+/master/stack_traces.md#how-to-use-base_stacktrace)
 ```cpp
 #include "base/debug/stack_trace.h"
 // ...
 LOG(ERROR) << "StackTrace: " << base::debug::StackTrace{};
 ```
 need `--disable-gpu-sandbox` flag if you are debugging gpu process, `--no-sandbox` flag if you are debugging one of the renderer processes
-
-# Faster git operations
-
 
 # Unit tests
 ### run unittests locally [ref](https://www.chromium.org/developers/testing/running-tests/#running-basic-tests-gtest-binaries)
