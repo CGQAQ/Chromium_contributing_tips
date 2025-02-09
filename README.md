@@ -116,6 +116,8 @@ third_party/blink/tools/run_web_tests.py -t Default
 ### Stop skip some tests [ref](https://chromium.googlesource.com/chromium/src/+/main/docs/testing/web_test_expectations.md)
 `third_party/blink/web_tests/TestExpectations` file contains all the skipped tests, you can remove the line end with `[Failure]` to run the test.
 ### Run only some tests
+> Caution: don't add './' to web tests path (like `./third_party/blink/...`), instead use `third_party/blink/...`
+
 ```console
 # To run only some of the tests, specify their directories or filenames as arguments to run_web_tests.py relative to the web test directory (src/third_party/blink/web_tests). For example, to run the fast form tests, use:
 third_party/blink/tools/run_web_tests.py fast/forms
