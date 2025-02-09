@@ -104,3 +104,29 @@ for example, run `TEST(CSSMathExpressionNode, TestProgressNotationComplex)`
 ~ out/Default/unit_tests --gtest_filter="BrowserListUnitTest.*"
 ```
 
+# Web Tests
+### Initial setup [ref](https://chromium.googlesource.com/chromium/src/+/main/docs/testing/web_tests.md#Initial-Setup)
+```console
+autoninja -C out/Default blink_tests
+```
+### Run Web tests [ref](https://chromium.googlesource.com/chromium/src/+/main/docs/testing/web_tests.md#Running-the-Tests)
+```console
+third_party/blink/tools/run_web_tests.py -t Default
+```
+### Stop skip some tests [ref](https://chromium.googlesource.com/chromium/src/+/main/docs/testing/web_test_expectations.md)
+`third_party/blink/web_tests/TestExpectations` file contains all the skipped tests, you can remove the line end with `[Failure]` to run the test.
+### Run only some tests
+```console
+# To run only some of the tests, specify their directories or filenames as arguments to run_web_tests.py relative to the web test directory (src/third_party/blink/web_tests). For example, to run the fast form tests, use:
+third_party/blink/tools/run_web_tests.py fast/forms
+# Or you could use the following shorthand:
+third_party/blink/tools/run_web_tests.py fast/fo\*
+```
+### Run WPT tests [ref](https://chromium.googlesource.com/chromium/src/+/main/docs/testing/run_web_platform_tests.md)
+```console
+third_party/blink/tools/run_wpt_tests.py --target=Default --product=headless_shell external/wpt/html/dom
+```
+### Rebaseline locally [ref](https://chromium.googlesource.com/chromium/src/+/main/docs/testing/web_test_expectations.md#Local-manual-rebaselining)
+```console
+third_party/blink/tools/run_web_tests.py --reset-results foo/bar/test.html
+```
