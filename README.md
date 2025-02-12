@@ -25,6 +25,14 @@ gclient runhooks
 ### Setting up builds
 ```console
 gn gen out/Default
+gn args out/Default
+```
+set args to
+```
+is_component_build=true
+blink_symbol_level=1
+v8_symbol_level=0
+cc_wrapper="ccache"
 ```
 
 ### Update your checkout [ref](https://chromium.googlesource.com/chromium/src/+/main/docs/linux/build_instructions.md#Update-your-checkout)
