@@ -27,7 +27,7 @@ gclient runhooks
 gn gen out/Default
 gn args out/Default
 ```
-set args to
+set args to [ref](https://www.chromium.org/developers/gn-build-configuration/)
 ```
 is_component_build=true
 blink_symbol_level=1
