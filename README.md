@@ -49,6 +49,7 @@ enable_nacl=false
 symbol_level=1
 blink_symbol_level=1
 v8_symbol_level=0
+cc_wrapper="ccache"
 ```
 ### Start build [ref](https://chromium.googlesource.com/chromium/src/+/main/docs/linux/build_instructions.md#Build-Chromium)
 ```console
