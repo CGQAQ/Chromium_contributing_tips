@@ -45,6 +45,7 @@ cc_wrapper="ccache"
 ### Faster build [ref](https://chromium.googlesource.com/chromium/src/+/main/docs/linux/build_instructions.md#Faster-builds)
 ```console
 gn args out/Default
+is_component_build=true
 enable_nacl=false
 symbol_level=1
 blink_symbol_level=1
