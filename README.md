@@ -30,6 +30,7 @@ gn args out/Default
 set args to [ref](https://www.chromium.org/developers/gn-build-configuration/)
 ```
 is_debug=true
+symbol_level=1
 blink_symbol_level=1
 v8_symbol_level=0
 cc_wrapper="ccache"
