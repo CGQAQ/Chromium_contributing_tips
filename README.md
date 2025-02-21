@@ -33,7 +33,6 @@ is_debug=true
 symbol_level=1
 blink_symbol_level=1
 v8_symbol_level=0
-cc_wrapper="ccache"
 ```
 
 ### Update your checkout [ref](https://chromium.googlesource.com/chromium/src/+/main/docs/linux/build_instructions.md#Update-your-checkout)
@@ -46,7 +45,6 @@ cc_wrapper="ccache"
 ### Faster build [ref](https://chromium.googlesource.com/chromium/src/+/main/docs/linux/build_instructions.md#Faster-builds)
 ```console
 gn args out/Default
-is_component_build=true
 enable_nacl=false
 symbol_level=1
 blink_symbol_level=1
