@@ -33,6 +33,7 @@ is_debug=true
 symbol_level=1
 blink_symbol_level=1
 v8_symbol_level=0
+enable_nacl=false
 ```
 
 ### Update your checkout [ref](https://chromium.googlesource.com/chromium/src/+/main/docs/linux/build_instructions.md#Update-your-checkout)
@@ -45,10 +46,11 @@ v8_symbol_level=0
 ### Faster build [ref](https://chromium.googlesource.com/chromium/src/+/main/docs/linux/build_instructions.md#Faster-builds)
 ```console
 gn args out/Default
-enable_nacl=false
+is_debug=true
 symbol_level=1
 blink_symbol_level=1
 v8_symbol_level=0
+enable_nacl=false
 ```
 ### Start build [ref](https://chromium.googlesource.com/chromium/src/+/main/docs/linux/build_instructions.md#Build-Chromium)
 ```console
