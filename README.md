@@ -51,6 +51,9 @@ symbol_level=1
 blink_symbol_level=1
 v8_symbol_level=0
 enable_nacl=false
+# with rbe by google
+use_remoteexec = true
+reclient_cfg_dir = "../../buildtools/reclient_cfgs/linux"
 ```
 ### Start build [ref](https://chromium.googlesource.com/chromium/src/+/main/docs/linux/build_instructions.md#Build-Chromium)
 ```console
