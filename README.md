@@ -44,6 +44,22 @@ enable_nacl=false
 
 # Build
 ### Faster build [ref](https://chromium.googlesource.com/chromium/src/+/main/docs/linux/build_instructions.md#Faster-builds)
+1. edit `.gclient` file  [ref](https://chromium.googlesource.com/chromium/src/+/main/docs/linux/build_instructions.md#use-reclient)
+```
+solutions = [
+  {
+    ...,
+    "custom_vars": {
+      # This is the correct instance name for using Chromium's RBE service.
+      # You can only use it if you were granted access to it. If you use your
+      # own REAPI-compatible backend, you will need to change this accordingly
+      # to its requirements.
+      "rbe_instance": "projects/rbe-chromium-untrusted/instances/default_instance",
+    },
+  },
+]
+```
+2. change gn args
 ```console
 gn args out/Default
 is_debug=true
