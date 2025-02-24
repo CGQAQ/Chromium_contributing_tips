@@ -22,6 +22,15 @@ cd src
 ./build/install-build-deps.sh
 gclient runhooks
 ```
+
+### Setup clangd
+```
+"-j=8"
+"--malloc-trim"
+"--background-index"
+"--pch-storage=memory"
+```
+
 ### Setting up builds
 ```console
 gn gen out/Default
