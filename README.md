@@ -25,7 +25,7 @@ gclient runhooks
 
 ### Setup clangd
 ```
-"-j=8"
+"-j=16"
 "--malloc-trim"
 "--background-index"
 "--pch-storage=memory"
