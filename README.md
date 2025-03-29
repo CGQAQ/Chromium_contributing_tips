@@ -43,6 +43,8 @@ symbol_level=1
 blink_symbol_level=1
 v8_symbol_level=0
 enable_nacl=false
+# useful runtime type info
+use_rtti = true
 ```
 
 ### Update your checkout [ref](https://chromium.googlesource.com/chromium/src/+/main/docs/linux/build_instructions.md#Update-your-checkout)
@@ -76,6 +78,8 @@ symbol_level=1
 blink_symbol_level=1
 v8_symbol_level=0
 enable_nacl=false
+# useful runtime type info
+use_rtti = true
 # with rbe by google
 use_remoteexec = true
 reclient_cfg_dir = "../../buildtools/reclient_cfgs/linux"
