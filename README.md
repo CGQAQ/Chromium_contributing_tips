@@ -82,7 +82,8 @@ enable_nacl=false
 use_rtti = true
 # with rbe by google
 use_remoteexec = true
-reclient_cfg_dir = "../../buildtools/reclient_cfgs/linux"
+use_reclient = false
+use_siso = true
 ```
 ### Start build [ref](https://chromium.googlesource.com/chromium/src/+/main/docs/linux/build_instructions.md#Build-Chromium)
 ```console
