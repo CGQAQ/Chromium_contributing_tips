@@ -1,5 +1,6 @@
 # This file is used to configure the clangd index server.
 # location: ~/.config/clangd/config.yaml
+# ref: https://github.com/clangd/chrome-remote-index/blob/main/docs/index.md
 
 If:
   PathMatch: ~/code/chromium/src/.*
