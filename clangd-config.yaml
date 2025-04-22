@@ -1,0 +1,27 @@
+# This file is used to configure the clangd index server.
+# location: ~/.config/clangd/config.yaml
+
+If:
+  PathMatch: ~/code/chromium/src/.*
+Index:
+  External:
+    Server: linux.clangd-index.chromium.org:5900
+    MountPoint: ~/code/chromium/src/
+
+---
+
+If:
+  PathMatch: /mnt/code/chromium/src/.*
+Index:
+  External:
+    Server: linux.clangd-index.chromium.org:5900
+    MountPoint: /mnt/code/chromium/src/
+
+---
+
+If:
+  PathMatch: /mnt/code/chromium2/src/.*
+Index:
+  External:
+    Server: linux.clangd-index.chromium.org:5900
+    MountPoint: /mnt/code/chromium2/src/
