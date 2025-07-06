@@ -4,11 +4,11 @@
 # NOTE: ~ should be replaced with an absolute path.
 
 If:
-  PathMatch: ~/code/chromium/src/.*
+  PathMatch: /home/cg/code/chromium/src/.*
 Index:
   External:
     Server: linux.clangd-index.chromium.org:5900
-    MountPoint: ~/code/chromium/src/
+    MountPoint: /home/cg/code/chromium/src/
 
 ---
 
