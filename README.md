@@ -8,6 +8,13 @@ This is docs for ubuntu 22.04, for other OS, please refer to [macOS.md](macOS.md
 1. Git
 2. Python v3.8+
 
+### How to upgrade git on Ubuntu
+```
+sudo apt update && sudo apt install software-properties-common
+sudo add-apt-repository ppa:git-core/ppa
+sudo apt install git
+```
+
 ### Install depot_tools [ref](https://chromium.googlesource.com/chromium/src/+/main/docs/linux/build_instructions.md#Install)
 ```console
 mkdir -p ~/code/google/
