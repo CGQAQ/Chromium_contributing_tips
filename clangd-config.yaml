@@ -2,6 +2,8 @@
 # location: ~/.config/clangd/config.yaml
 # ref: https://github.com/clangd/chrome-remote-index/blob/main/docs/index.md
 # NOTE: ~ should be replaced with an absolute path.
+# NOTE: don't forget to call 
+#   ./tools/clang/scripts/generate_compdb.py -o compile_commands.json -p ./out/Default/
 
 If:
   PathMatch: /home/cg/code/chromium/src/.*
