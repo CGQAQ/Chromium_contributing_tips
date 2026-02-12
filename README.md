@@ -1,27 +1,48 @@
-# Chromium_contributing_tips (Ubuntu 22.04)
-Chromium C++ Codebase contributing tricks &amp; tips for myself. I'm using ubuntu 22.04 right now, so other OS docs are likely not up-to-date.
+# Chromium Contributing Tips
 
-This is docs for ubuntu 22.04, for other OS, please refer to [macOS.md](macOS.md) or [Windows.md](Windows.md)
+Personal tricks and tips for contributing to the Chromium C++ codebase.
 
-# Get the code
-### Prerequisits
+> **Note:** This guide targets **Ubuntu 22.04** and is the most actively maintained.
+> For other platforms, see [macOS](macOS.md) or [Windows](Windows.md).
+
+---
+
+## Table of Contents
+
+- [Getting the Code](#getting-the-code)
+- [Building](#building)
+- [Generating compile\_commands.json](#generating-compile_commandsjson)
+- [Debugging](#debugging)
+- [Unit Tests](#unit-tests)
+- [Web Tests](#web-tests)
+
+---
+
+## Getting the Code
+
+### Prerequisites
+
 1. Git
 2. Python v3.8+
 
-### How to upgrade git on Ubuntu
-```
+### Upgrading Git on Ubuntu
+
+```console
 sudo apt update && sudo apt install software-properties-common
 sudo add-apt-repository ppa:git-core/ppa
 sudo apt install git
 ```
 
-### Install depot_tools [ref](https://chromium.googlesource.com/chromium/src/+/main/docs/linux/build_instructions.md#Install)
+### Installing `depot_tools` ([ref](https://chromium.googlesource.com/chromium/src/+/main/docs/linux/build_instructions.md#Install))
+
 ```console
 mkdir -p ~/code/google/
 git clone https://chromium.googlesource.com/chromium/tools/depot_tools.git ~/code/google/depot_tools
 export PATH="${HOME}/code/google/depot_tools:$PATH"
 ```
-### Get the code [ref](https://chromium.googlesource.com/chromium/src/+/main/docs/linux/build_instructions.md#Get-the-code)
+
+### Fetching the Source ([ref](https://chromium.googlesource.com/chromium/src/+/main/docs/linux/build_instructions.md#Get-the-code))
+
 ```console
 mkdir -p ~/code/google/chromium && cd ~/code/google/chromium
 fetch --nohooks chromium
@@ -30,7 +51,10 @@ cd src
 gclient runhooks
 ```
 
-### Setup clangd
+### Setting Up clangd
+
+Add the following to your clangd config:
+
 ```
 "-j=16"
 "--malloc-trim"
@@ -38,147 +62,196 @@ gclient runhooks
 "--pch-storage=memory"
 ```
 
-### Setting up builds
+### Configuring Build Arguments ([ref](https://www.chromium.org/developers/gn-build-configuration/))
+
 ```console
 gn gen out/Default
 gn args out/Default
 ```
-set args to [ref](https://www.chromium.org/developers/gn-build-configuration/)
-```
-is_debug=true
-symbol_level=1
-blink_symbol_level=1
-v8_symbol_level=0
-enable_nacl=false
-# useful runtime type info
-use_rtti = true
+
+Set the following args:
+
+```gn
+is_debug = true
+symbol_level = 1
+blink_symbol_level = 1
+v8_symbol_level = 0
+enable_nacl = false
+use_rtti = true  # useful runtime type info
 ```
 
-### Update your checkout [ref](https://chromium.googlesource.com/chromium/src/+/main/docs/linux/build_instructions.md#Update-your-checkout)
+### Updating Your Checkout ([ref](https://chromium.googlesource.com/chromium/src/+/main/docs/linux/build_instructions.md#Update-your-checkout))
+
 ```console
-~ git rebase-update
-~ gclient sync -Df
+git rebase-update
+gclient sync -Df
 ```
 
-# Build
-### Faster build [ref](https://chromium.googlesource.com/chromium/src/+/main/docs/linux/build_instructions.md#Faster-builds)
-1. edit `.gclient` file  [ref](https://chromium.googlesource.com/chromium/src/+/main/docs/linux/build_instructions.md#use-reclient)
-```
+---
+
+## Building
+
+### Faster Builds with RBE ([ref](https://chromium.googlesource.com/chromium/src/+/main/docs/linux/build_instructions.md#Faster-builds))
+
+1. Edit your `.gclient` file to add the RBE instance ([ref](https://chromium.googlesource.com/chromium/src/+/main/docs/linux/build_instructions.md#use-reclient)):
+
+```python
 solutions = [
   {
     ...,
     "custom_vars": {
-      # This is the correct instance name for using Chromium's RBE service.
-      # You can only use it if you were granted access to it. If you use your
-      # own REAPI-compatible backend, you will need to change this accordingly
-      # to its requirements.
+      # Chromium's RBE service instance. You can only use this if you have
+      # been granted access. For a custom REAPI-compatible backend, change
+      # this accordingly.
       "rbe_instance": "projects/rbe-chromium-untrusted/instances/default_instance",
     },
   },
 ]
 ```
-2. change gn args
+
+2. Update your GN args:
+
 ```console
 gn args out/Default
-is_debug=true
-symbol_level=1
-blink_symbol_level=1
-v8_symbol_level=0
-enable_nacl=false
-# useful runtime type info
+```
+
+```gn
+is_debug = true
+symbol_level = 1
+blink_symbol_level = 1
+v8_symbol_level = 0
+enable_nacl = false
 use_rtti = true
-# with rbe by google
 use_remoteexec = true
 use_reclient = false
 use_siso = true
 ```
-### Start build [ref](https://chromium.googlesource.com/chromium/src/+/main/docs/linux/build_instructions.md#Build-Chromium)
+
+### Starting a Build ([ref](https://chromium.googlesource.com/chromium/src/+/main/docs/linux/build_instructions.md#Build-Chromium))
+
 ```console
 autoninja -C out/Default chrome
 ```
 
-### List targets
+### Listing All Targets
+
 ```console
 gn ls out/Default
 ```
 
-### Run
+### Running Chrome
+
 ```console
 out/Default/chrome
 ```
 
-# Generate `compile_commands.json` [ref](https://chromium.googlesource.com/chromium/src/+/master/docs/clangd.md#setting-up)
+---
+
+## Generating `compile_commands.json` ([ref](https://chromium.googlesource.com/chromium/src/+/master/docs/clangd.md#setting-up))
+
 ```console
-# unix like
+# Linux / macOS
 tools/clang/scripts/generate_compdb.py -p out/Default > compile_commands.json
 
-# powershell
-# NOTE: if failed, please check python version, need python3
-python tools/clang/scripts/generate_compdb.py -p out/Default | out-file -encoding utf8 compile_commands.json
+# PowerShell (requires Python 3)
+python tools/clang/scripts/generate_compdb.py -p out/Default | Out-File -Encoding utf8 compile_commands.json
 ```
 
-# Debug
-### Logging [ref](https://www.chromium.org/for-testers/enable-logging/)
-1. `./out/release/chrome.exe  --enable-logging=stderr --v=-1`
-2. in code
+---
+
+## Debugging
+
+### Logging ([ref](https://www.chromium.org/for-testers/enable-logging/))
+
+Enable stderr logging at runtime:
+
+```console
+out/Default/chrome --enable-logging=stderr --v=-1
+```
+
+Add log statements in code:
+
 ```cpp
 #include "base/logging.h"
 // ...
-LOG(ERROR) << "YOUR LOG" << YOUR_VARIABLE ;
+LOG(ERROR) << "YOUR LOG" << YOUR_VARIABLE;
 ```
 
-### StackTrace [ref](https://chromium.googlesource.com/chromiumos/docs/+/master/stack_traces.md#how-to-use-base_stacktrace)
+### Stack Traces ([ref](https://chromium.googlesource.com/chromiumos/docs/+/master/stack_traces.md#how-to-use-base_stacktrace))
+
 ```cpp
 #include "base/debug/stack_trace.h"
 // ...
 LOG(ERROR) << "StackTrace: " << base::debug::StackTrace{};
 ```
-need `--disable-gpu-sandbox` flag if you are debugging gpu process, `--no-sandbox` flag if you are debugging one of the renderer processes
 
-# Unit tests
-### run unittests locally [ref](https://www.chromium.org/developers/testing/running-tests/#running-basic-tests-gtest-binaries)
-1. find subset
+> **Note:** Use `--disable-gpu-sandbox` when debugging the GPU process, or `--no-sandbox` when debugging a renderer process.
+
+---
+
+## Unit Tests
+
+### Running Unit Tests Locally ([ref](https://www.chromium.org/developers/testing/running-tests/#running-basic-tests-gtest-binaries))
+
+1. **Find the test target** for a given source file:
+
 ```console
-~ gn refs out/Default --testonly=true --type=executable --all chrome/browser/ui/browser_list_unittest.cc
-//chrome/test:unit_tests
-```
-2. use it without double slash
-```console
-~ autoninja.bat -C ./out/Default/ 'third_party/blink/renderer/controller:blink_unittests'
-ninja: Entering directory `./out/Default/'
-[3/3] LINK blink_unittests.exe blink_unittests.exe.pdb
-```
-3. Run it with gtest_filter
-for example, run `TEST(CSSMathExpressionNode, TestProgressNotationComplex)`
-```console
-~ out/Default/unit_tests --gtest_filter="BrowserListUnitTest.*"
+gn refs out/Default --testonly=true --type=executable --all chrome/browser/ui/browser_list_unittest.cc
+# Output: //chrome/test:unit_tests
 ```
 
-# Web Tests
-### Initial setup [ref](https://chromium.googlesource.com/chromium/src/+/main/docs/testing/web_tests.md#Initial-Setup)
+2. **Build the test target** (omit the leading `//`):
+
+```console
+autoninja -C out/Default chrome/test:unit_tests
+```
+
+3. **Run with a filter**:
+
+```console
+out/Default/unit_tests --gtest_filter="BrowserListUnitTest.*"
+```
+
+---
+
+## Web Tests
+
+### Initial Setup ([ref](https://chromium.googlesource.com/chromium/src/+/main/docs/testing/web_tests.md#Initial-Setup))
+
 ```console
 autoninja -C out/Default blink_tests
 ```
-### Run Web tests [ref](https://chromium.googlesource.com/chromium/src/+/main/docs/testing/web_tests.md#Running-the-Tests)
+
+### Running Web Tests ([ref](https://chromium.googlesource.com/chromium/src/+/main/docs/testing/web_tests.md#Running-the-Tests))
+
 ```console
 third_party/blink/tools/run_web_tests.py -t Default
 ```
-### Stop skip some tests [ref](https://chromium.googlesource.com/chromium/src/+/main/docs/testing/web_test_expectations.md)
-`third_party/blink/web_tests/TestExpectations` file contains all the skipped tests, you can remove the line end with `[Failure]` to run the test.
-### Run only some tests
-> Caution: don't add './' to web tests path (like `./third_party/blink/...`), instead use `third_party/blink/...`
+
+### Unskipping Tests ([ref](https://chromium.googlesource.com/chromium/src/+/main/docs/testing/web_test_expectations.md))
+
+The file `third_party/blink/web_tests/TestExpectations` lists all skipped tests. Remove lines ending with `[Failure]` to re-enable them.
+
+### Running a Subset of Tests
+
+> **Caution:** Do not prefix paths with `./` (e.g., use `third_party/blink/...`, not `./third_party/blink/...`).
 
 ```console
-# To run only some of the tests, specify their directories or filenames as arguments to run_web_tests.py relative to the web test directory (src/third_party/blink/web_tests). For example, to run the fast form tests, use:
+# Run all fast/forms tests
 third_party/blink/tools/run_web_tests.py fast/forms
-# Or you could use the following shorthand:
-third_party/blink/tools/run_web_tests.py fast/fo\*
+
+# Wildcard shorthand
+third_party/blink/tools/run_web_tests.py fast/fo*
 ```
-### Run WPT tests [ref](https://chromium.googlesource.com/chromium/src/+/main/docs/testing/run_web_platform_tests.md)
+
+### Running WPT Tests ([ref](https://chromium.googlesource.com/chromium/src/+/main/docs/testing/run_web_platform_tests.md))
+
 ```console
 third_party/blink/tools/run_wpt_tests.py --target=Default --product=headless_shell external/wpt/html/dom
 ```
-### Rebaseline locally [ref](https://chromium.googlesource.com/chromium/src/+/main/docs/testing/web_test_expectations.md#Local-manual-rebaselining)
+
+### Local Rebaselining ([ref](https://chromium.googlesource.com/chromium/src/+/main/docs/testing/web_test_expectations.md#Local-manual-rebaselining))
+
 ```console
 third_party/blink/tools/run_web_tests.py --reset-results foo/bar/test.html
 ```

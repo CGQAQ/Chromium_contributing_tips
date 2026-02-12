@@ -1,22 +1,37 @@
-# Chromium_contributing_tips (Windows)
-Chromium C++ Codebase contributing tricks &amp; tips for myself
+# Chromium Contributing Tips — Windows
 
-This is docs for Windows, for other OS, please refer to [Ubuntu 22.04](README.md) or [macOS](macOS.md)
+Personal tricks and tips for contributing to the Chromium C++ codebase on Windows.
 
+> For other platforms, see [Ubuntu 22.04](README.md) or [macOS](macOS.md).
 
-# Get the code
-## Prerequisits
+---
+
+## Table of Contents
+
+- [Getting the Code](#getting-the-code)
+- [Building](#building)
+- [Faster Git Operations](#faster-git-operations)
+
+---
+
+## Getting the Code
+
+### Prerequisites
+
 1. Git
 
-## Get the `depot_tools` [Windows](https://chromium.googlesource.com/chromium/src/+/main/docs/windows_build_instructions.md#install) 
+### Installing `depot_tools` ([ref](https://chromium.googlesource.com/chromium/src/+/main/docs/windows_build_instructions.md#install))
+
 ```console
 mkdir -p ~/Sources/Chromium/depot_tools
 cd ~/Sources/Chromium/depot_tools
 git clone https://chromium.googlesource.com/chromium/tools/depot_tools.git .
-# export PATH=/path/to/depot_tools:$PATH  OR add depot_tools path to PATH on Windows machine
 ```
 
-## Get the code [Windows](https://chromium.googlesource.com/chromium/src/+/main/docs/windows_build_instructions.md#get-the-code) [macOS](https://chromium.googlesource.com/chromium/src/+/main/docs/mac_build_instructions.md#get-the-code)
+Add the `depot_tools` directory to your system `PATH`.
+
+### Fetching the Source ([ref](https://chromium.googlesource.com/chromium/src/+/main/docs/windows_build_instructions.md#get-the-code))
+
 ```console
 mkdir -p ~/Sources/Chromium/Source
 cd ~/Sources/Chromium/Source
@@ -27,17 +42,40 @@ git pull
 gclient sync
 ```
 
-# Faster build [ref](https://chromium.googlesource.com/chromium/src/+/HEAD/docs/windows_build_instructions.md#faster-builds)
-1. gn args out/release
-Then input:
+---
+
+## Building
+
+### Faster Builds ([ref](https://chromium.googlesource.com/chromium/src/+/HEAD/docs/windows_build_instructions.md#faster-builds))
+
+1. Configure build arguments:
+
+```console
+gn args out/release
+```
+
+Set the following args:
+
 ```gn
 is_component_build = true
 is_debug = false
 symbol_level = 0
 ```
-save and exit editor
 
-2. `autoninja -C out/release`
-3. `./out/release/chrome.exe`
+2. Build:
 
-# Faster git operations
+```console
+autoninja -C out/release chrome
+```
+
+3. Run:
+
+```console
+./out/release/chrome.exe
+```
+
+---
+
+## Faster Git Operations
+
+*(TODO: Add Windows-specific Git optimizations.)*
