@@ -11,6 +11,7 @@ Personal tricks and tips for contributing to the Chromium C++ codebase.
 
 - [Getting the Code](#getting-the-code)
 - [Building](#building)
+- [Stacked CLs](#stacked-cls)
 - [Generating compile\_commands.json](#generating-compile_commandsjson)
 - [Debugging](#debugging)
 - [Unit Tests](#unit-tests)
@@ -143,6 +144,80 @@ gn ls out/Default
 
 ```console
 out/Default/chrome
+```
+
+---
+
+## Stacked CLs ([ref](https://commondatastorage.googleapis.com/chrome-infra-docs/flat/depot_tools/docs/html/depot_tools_tutorial.html#_managing_dependent_cls), [commands](https://commondatastorage.googleapis.com/chrome-infra-docs/flat/depot_tools/docs/html/depot_tools.html))
+
+Stacked CLs let you split a large change into smaller, dependent changelists that are reviewed and landed in order.
+
+### Creating a Chain of Branches
+
+```console
+# Start the first CL from main
+git new-branch first-cl
+
+# ... make changes, commit ...
+
+# Create a second CL on top of the first
+git new-branch --upstream-current second-cl
+
+# ... make changes, commit ...
+
+# Create a third CL on top of the second
+git new-branch --upstream-current third-cl
+```
+
+### Uploading the Stack
+
+Upload from the **root** branch of the stack to upload all dependent CLs:
+
+```console
+# Check out the root branch of the stack (use git map-branches -v to find it)
+
+# Upload the current CL and all CLs that depend on it
+git cl upload --dependencies
+```
+
+### Navigating the Stack
+
+```console
+# Move to the parent branch
+git nav-upstream
+
+# Move to a child branch
+git nav-downstream
+```
+
+### Rebasing the Stack
+
+```console
+# Rebase only the current stack (not all local branches)
+git rebase-update --tree
+gclient sync -Df
+```
+
+`git rebase-update --tree` re-parents each branch in the current stack onto the latest upstream and drops branches whose commits have already landed.
+
+### Viewing the Branch Tree
+
+```console
+git map-branches -v
+```
+
+Shows all local branches, their upstream relationships, and behind/ahead counts.
+
+### Re-parenting a Branch
+
+If you need to change a branch's upstream after creation:
+
+```console
+# Re-parent onto a specific branch
+git reparent-branch <new-parent>
+
+# Re-parent directly onto the root (main/master)
+git reparent-branch --root
 ```
 
 ---
