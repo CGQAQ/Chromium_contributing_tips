@@ -12,7 +12,7 @@ Personal tricks and tips for contributing to the Chromium C++ codebase.
 - [Getting the Code](#getting-the-code)
 - [Building](#building)
 - [Stacked CLs](#stacked-cls-ref-commands)
-- [Generating compile\_commands.json](#generating-compile_commandsjson)
+- [Generating compile\_commands.json](#generating-compile_commandsjson-ref)
 - [Debugging](#debugging)
 - [Unit Tests](#unit-tests)
 - [Web Tests](#web-tests)
