@@ -1,6 +1,7 @@
 # This file is used to configure the clangd index server.
 # location: ~/.config/clangd/config.yaml
 # ref: https://github.com/clangd/chrome-remote-index/blob/main/docs/index.md
+# ref: https://github.com/chromium/chromium/blob/main/docs/clangd.md#getting-clangd
 # NOTE: ~ should be replaced with an absolute path.
 # NOTE: don't forget to call 
 #   ./tools/clang/scripts/generate_compdb.py -o compile_commands.json -p ./out/Default/
