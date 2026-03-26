@@ -101,7 +101,9 @@ solutions = [
   {
     ...,
     "custom_vars": {
-      # Add this if we needed clangd
+      # Add this if we need clangd
+      # After this, gclient will keep the binary at third_party/llvm-build/Release+Asserts/bin/clangd
+      # in sync with the version of Clang used by Chromium.
       "checkout_clangd": True,
       # Chromium's RBE service instance. You can only use this if you have
       # been granted access. For a custom REAPI-compatible backend, change
