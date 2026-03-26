@@ -101,6 +101,8 @@ solutions = [
   {
     ...,
     "custom_vars": {
+      # Add this if we needed clangd
+      "checkout_clangd": True,
       # Chromium's RBE service instance. You can only use this if you have
       # been granted access. For a custom REAPI-compatible backend, change
       # this accordingly.
