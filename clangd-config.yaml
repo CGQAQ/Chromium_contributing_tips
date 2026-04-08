@@ -7,26 +7,26 @@
 #   ./tools/clang/scripts/generate_compdb.py -o compile_commands.json -p ./out/Default/
 
 If:
-  PathMatch: /home/cg/code/chromium/src/.*
+  PathMatch: /home/cg/google/chromium/src/.*
 Index:
   External:
     Server: linux.clangd-index.chromium.org:5900
-    MountPoint: /home/cg/code/chromium/src/
+    MountPoint: /home/cg/google/chromium/src/
 
 ---
 
 If:
-  PathMatch: /mnt/code/chromium/src/.*
+  PathMatch: /home/cg/google/chromium1/src/.*
 Index:
   External:
     Server: linux.clangd-index.chromium.org:5900
-    MountPoint: /mnt/code/chromium/src/
+    MountPoint: /home/cg/google/chromium1/src/
 
 ---
 
 If:
-  PathMatch: /mnt/code/chromium2/src/.*
+  PathMatch: /home/cg/google/chromium2/src/.*
 Index:
   External:
     Server: linux.clangd-index.chromium.org:5900
-    MountPoint: /mnt/code/chromium2/src/
+    MountPoint: /home/cg/google/chromium2/src/
