@@ -30,3 +30,30 @@ Index:
   External:
     Server: linux.clangd-index.chromium.org:5900
     MountPoint: /home/cg/google/chromium2/src/
+
+---
+
+If:
+  PathMatch: /home/cg/google/chromium3/src/.*
+Index:
+  External:
+    Server: linux.clangd-index.chromium.org:5900
+    MountPoint: /home/cg/google/chromium3/src/
+
+---
+
+If:
+  PathMatch: /home/cg/google/chromium4/src/.*
+Index:
+  External:
+    Server: linux.clangd-index.chromium.org:5900
+    MountPoint: /home/cg/google/chromium4/src/
+
+---
+
+If:
+  PathMatch: /home/cg/google/chromium5/src/.*
+Index:
+  External:
+    Server: linux.clangd-index.chromium.org:5900
+    MountPoint: /home/cg/google/chromium5/src/
